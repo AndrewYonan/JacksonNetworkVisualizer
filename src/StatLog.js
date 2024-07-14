@@ -9,25 +9,30 @@ class StatLog {
         this.finished_clock_font_size = 40
         this.clock_font = "Times New Roman";
         this.space = 200;
-        this.justify = 0; //0,1,2
-
-        this.clock_color = "#777";
-        this.clock_highlight_color = "#393";
     }
 
     display_seekers_created() {
+        let cur = ctx.fillStyle;
+        ctx.fillStyle = graphics.text_reg_color();
         ctx.font = this.font_size.toString() + "px " + this.font;
         ctx.fillText("Created : " + seekers_created.toString(), this.x, this.y);
+        ctx.fillStyle = cur;
     }
 
     display_seekers_processed() {
+        let cur = ctx.fillStyle;
+        ctx.fillStyle = graphics.text_reg_color();
         ctx.font = this.font_size.toString() + "px " + this.font;
         ctx.fillText("Processed : " + seekers_processed.toString(), this.x + this.space, this.y);
+        ctx.fillStyle = cur;
     }
 
     display_seekers_alive() {
+        let cur = ctx.fillStyle;
+        ctx.fillStyle = graphics.text_reg_color();
         ctx.font = this.font_size.toString() + "px " + this.font;
         ctx.fillText("Alive : " + seekers.length.toString(), this.x + 2 * this.space, this.y);
+        ctx.fillStyle = cur;
     }
 
     //horrendous method:
@@ -44,10 +49,10 @@ class StatLog {
 
         if (simulation_finished) {
             this.clock_font_size = this.finished_clock_font_size;
-            ctx.fillStyle = this.clock_highlight_color;
+            ctx.fillStyle = graphics.clock_highlight_color();
         } 
         else {
-            ctx.fillStyle = this.clock_color;
+            ctx.fillStyle = graphics.clock_color();
         } 
 
         if (minutes < 10) str += ("0" + minutes.toString());

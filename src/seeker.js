@@ -4,12 +4,8 @@ class Seeker {
 
         this.x = x_0;
         this.y = y_0;
-
         this.size = SEEKER_SIZE;
         this.speed = SEEKER_SPEED;
-        this.color = "#2aa";
-        this.highlight = "#4d4";
-        this.finished_color = "#888";
 
         this.target_node = null;
         this.service_completed = false;
@@ -20,7 +16,7 @@ class Seeker {
         this.moving_up_in_line = false; //moving to next spot in line
         this.is_last_in_line = false; 
         this.exiting_system = false;
-        this.successor_move_reaction_margin = 20;
+        this.successor_move_reaction_margin = SEEKER_REACTION_TIME;
         
         this.next_spot_in_line = null;
         this.successor = null;
@@ -274,10 +270,12 @@ class Seeker {
     show_place_in_line() {
 
         if (this.place_in_line < 0) return;
-        ctx.font = "15px Arial";
-
         let margin = (SEEKER_SIZE/2 + 5);
         let target_server = this.target_node.get_server();
+
+        ctx.font = "15px Arial";
+        let cur = ctx.fillStyle;
+        ctx.fillStyle = graphics.text_reg_color();
 
         if (target_server.get_line_orientation() == 1) {
             ctx.fillText((this.place_in_line + 1).toString(), this.x, this.y - margin);
@@ -291,6 +289,9 @@ class Seeker {
         else if (target_server.get_line_orientation() == 4) {
             ctx.fillText((this.place_in_line + 1).toString(), this.x - margin - 15, this.y);
         }
+
+        ctx.fillStyle = cur;
+
     }
 
     draw() {
@@ -300,15 +301,15 @@ class Seeker {
 
         if (this.being_served) {   
             ctx.lineWidth = 5; 
-            graphics.trace_square(this.x, this.y, this.size, this.highlight);
+            graphics.trace_square(this.x, this.y, this.size, graphics.seeker_highlight_color());
         }
         else if (this.exiting_system) {
             ctx.lineWidth = 3;
-            graphics.trace_square(this.x, this.y, this.size, this.finished_color);
+            graphics.trace_square(this.x, this.y, this.size, graphics.seeker_finished_color());
         }
         else {
             ctx.lineWidth = 3;    
-            graphics.trace_square(this.x, this.y, this.size, this.color);
+            graphics.trace_square(this.x, this.y, this.size, graphics.seeker_color());
         }
         
         ctx.lineWidth = cur_width;

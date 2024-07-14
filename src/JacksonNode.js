@@ -7,6 +7,14 @@ class JacksonNode {
         this.transition_probabilities = [];
     }
 
+    get_probabilities() {
+        return this.transition_probabilities;
+    }
+
+    get_adjacent_nodes() {
+        return this.adjacent_nodes;
+    }
+
     follows_law_of_probability() {
         let margin = 0.0001;
         let sum = 0;

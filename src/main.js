@@ -5,18 +5,23 @@ const frame_rate = 60;
 const iterator = setInterval(frame, 1000 / frame_rate);
 const W = 1500;
 const H = 900;
-const SEEKER_SPEED = 6; 
-const SEEKER_SIZE = 22; //min 10
-const SERVER_SIZE = SEEKER_SIZE;
-const LINE_SPACE_BETWEEN = 5;
 var frame_count = 0;
 var seekers_created = 0;
 var seekers_processed = 0;
 var simulation_finished = false;
-const MAX_SEEKERS = 120;
-
 var seekers = []; //seeker instances
 var statLog = new StatLog(); //clock, instance counts
+var evtHandler = new EventHandler();
+
+const MAX_SEEKERS = 100;
+const SEEKER_SPEED = 5.7; 
+const SEEKER_SIZE = 22; 
+const SEEKER_REACTION_TIME = 25; //reaction to next in queue moving up
+const SERVER_SIZE = SEEKER_SIZE;
+const LINE_SPACE_BETWEEN = 7;
+const add_seeker_interval = 10;
+
+evtHandler.active();
 
 /* set jackson network structure
 - choose between configurations:
@@ -24,7 +29,6 @@ single-queue, double-queue, fork, 3-fork, fan, 2-fan, spiral, steps, waterfall, 
  */
 
 var jacksonNetwork = new JacksonNetwork("star");
-var add_seeker_interval = 5;
 
 
 function frame() {

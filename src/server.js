@@ -3,7 +3,6 @@ class Server {
         this.x = x_0;
         this.y = y_0;
         this.size = SERVER_SIZE + 20;
-        this.color = "#000";
         this.service_time = rate;
         this.is_occupied = false;
         this.service_counter = 0;
@@ -143,6 +142,8 @@ class Server {
 
         ctx.font = "20px Arial";
         let margin = this.size/2 + 10;
+        let cur = ctx.fillStyle;
+        ctx.fillStyle = graphics.text_reg_color();
 
         if (this.line_orientation == 2) {
             ctx.fillText(this.service_counter.toString(), this.x + margin + 10, this.y); 
@@ -150,6 +151,8 @@ class Server {
         else {
             ctx.fillText(this.service_counter.toString(), this.x, this.y - margin);
         }
+
+        ctx.fillStyle = cur;
     }
 
     show_end_of_line() {
@@ -162,12 +165,12 @@ class Server {
 
             let cur_line_width = ctx.lineWidth;
             ctx.lineWidth = 3;
-            graphics.trace_square(this.x, this.y, this.size, this.color);    
+            graphics.trace_square(this.x, this.y, this.size, graphics.server_highlight_color());    
             ctx.lineWidth = cur_line_width;
 
             this.show_service_time();
 
         }
-        graphics.trace_square(this.x, this.y, this.size, this.color);
+        graphics.trace_square(this.x, this.y, this.size, graphics.server_color());
     }
 }

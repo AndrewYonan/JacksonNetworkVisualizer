@@ -26,6 +26,19 @@ class JacksonNetwork {
         return true;
     }
 
+    print_probabilities() {
+        for (let i = 0; i < this.nodes.length; ++i) {
+            let str = "";
+            let node = this.nodes[i];
+            let adj_nodes = node.get_adjacent_nodes();
+            console.log("node : " + node);
+            for (let j = 0; j < adj_nodes.length; ++j) {
+                str += ("going to " + adj_nodes[j] + " with probability " + node.get_probabilities()[j] + ",");
+            }
+            console.log(str);
+        }
+    }
+
 
     display_nodes() {
         for (let node of this.nodes) {

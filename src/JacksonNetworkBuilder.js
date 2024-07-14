@@ -257,6 +257,43 @@ class JacksonNetworkBuilder {
         this.nodes.push(node9);
     }
 
+    configure_lattice() {
+
+        //non-operational
+
+        let n = 4;
+        let margin = 150;
+        let gap = (SERVER_SIZE + margin);
+        let dist = (n - 1) * gap;
+
+        let rate = 4;
+
+        let start_x = W/2 - dist/2;
+        let start_y = H/2 - dist/2;
+
+        for (let i = 0; i < n; ++i) {
+
+            let x = start_x + i*gap;
+
+            for (let j = 0; j < n; ++j) {
+
+                let y = start_y + j*gap;
+
+                let tag = (i == 0 && j == 0) ? "entry" : "reg";
+                if (i == n-1 && j == n-1) tag = "exit";
+
+                let node = new JacksonNode(x,y,rate,tag,1);
+
+                if (i > 0 && j == 0) {
+                    this.nodes[i-1].add_adjacent_node(node, 1);
+                }
+
+                this.nodes.push(node);
+            }
+        }
+
+    }
+
     build() {
         return this.nodes;
     }
