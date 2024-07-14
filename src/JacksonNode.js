@@ -7,6 +7,10 @@ class JacksonNode {
         this.transition_probabilities = [];
     }
 
+    reset() {
+        this.server.reset_params();
+    }
+
     get_probabilities() {
         return this.transition_probabilities;
     }

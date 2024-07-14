@@ -2,7 +2,7 @@ class Server {
     constructor(x_0, y_0, rate, orientation) {
         this.x = x_0;
         this.y = y_0;
-        this.size = SERVER_SIZE + 20;
+        this.size = SEEKER_SIZE + 20;
         this.service_time = rate;
         this.is_occupied = false;
         this.service_counter = 0;
@@ -12,6 +12,15 @@ class Server {
         this.queue = [];
         this.space_between_line_spots = LINE_SPACE_BETWEEN;
         this.end_of_line = this.create_end_of_line();
+    }
+
+    reset_params() {
+        this.is_occupied = false;
+        this.service_counter = 0;
+        this.end_of_line_spot = 0;
+        this.queue = [];
+        this.end_of_line = this.create_end_of_line();
+
     }
 
     create_end_of_line() {
@@ -172,5 +181,9 @@ class Server {
 
         }
         graphics.trace_square(this.x, this.y, this.size, graphics.server_color());
+    }
+
+    update() {
+        //
     }
 }

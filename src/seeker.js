@@ -5,7 +5,7 @@ class Seeker {
         this.x = x_0;
         this.y = y_0;
         this.size = SEEKER_SIZE;
-        this.speed = SEEKER_SPEED;
+        this.speed = 5;
 
         this.target_node = null;
         this.service_completed = false;
@@ -16,7 +16,7 @@ class Seeker {
         this.moving_up_in_line = false; //moving to next spot in line
         this.is_last_in_line = false; 
         this.exiting_system = false;
-        this.successor_move_reaction_margin = SEEKER_REACTION_TIME;
+        this.successor_move_reaction_margin = 10;
         
         this.next_spot_in_line = null;
         this.successor = null;
@@ -28,6 +28,10 @@ class Seeker {
 
     set_speed(s) {
         this.speed = s;
+    }
+
+    set_reaction_margin(r) {
+        this.successor_move_reaction_margin = r;
     }
 
     set_target_node(node) {

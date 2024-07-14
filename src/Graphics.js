@@ -1,16 +1,30 @@
 class graphics {
-    static color_invert = false;
+    static color_invert = true;
     static trace_square(x,y,s,color) {
-        var cur_style = ctx.strokeStyle;
+        let cur_style = ctx.strokeStyle;
         ctx.strokeStyle = color;
         ctx.beginPath();
         ctx.rect(x - s/2, y - s/2, s, s);
         ctx.stroke();
         ctx.strokeStyle = cur_style;
     }
+    static trace_rect(x,y,w,h,color) {
+        let cur_style = ctx.strokeStyle;
+        ctx.strokeStyle = color;
+        ctx.beginPath();
+        ctx.rect(x - w/2, y - h/2, w, h);
+        ctx.stroke();
+        ctx.strokeStyle = cur_style;
+    }
+    static fill_rect(x,y,w,h,color) {
+        let cur_fill = ctx.fillStyle;
+        ctx.fillStyle = color;
+        ctx.fillRect(x - w/2, y - h/2, w, h);
+        ctx.fillStyle = cur_fill;
+    }
     static dot(x, y) {
-        var cur_style = ctx.strokeStyle;
-        var cur_line_width = ctx.lineWidth;
+        let cur_style = ctx.strokeStyle;
+        let cur_line_width = ctx.lineWidth;
         ctx.strokeStyle = "black";
         ctx.lineWidth = 5;
         ctx.beginPath();
@@ -19,13 +33,20 @@ class graphics {
         ctx.strokeStyle = cur_style;
         ctx.lineWidth = cur_line_width;
     }
+    static fill_text(text, x, y, font, font_size) {
+        let cur = ctx.fillStyle;
+        ctx.fillStyle = graphics.text_reg_color();
+        ctx.font = font_size.toString() + "px " + font;
+        ctx.fillText(text, x, y);
+        ctx.fillStyle = cur;
+    }
     static clear(c,ctx) {
         let cur = ctx.fillStyle;
         ctx.clearRect(0, 0, c.width, c.height);
         ctx.fillStyle = graphics.background_color();
         ctx.fillRect(0, 0, c.width, c.height);
         ctx.fillStyle = cur;
-    }
+    } 
     static invert() {
         this.color_invert = !this.color_invert;
     }
@@ -52,6 +73,15 @@ class graphics {
     }
     static clock_highlight_color() {
         return graphics.treat(new Color(0, 0, 0, 255)).getHex();
+    }
+    static slider_rail_color() {
+        return graphics.treat(new Color(100, 100, 100, 255)).getHex();
+    }
+    static slider_color() {
+        return graphics.treat(new Color(40, 40, 40, 255)).getHex();
+    }
+    static slider_highlight_color() {
+        return graphics.treat(new Color(75, 150, 40, 255)).getHex();
     }
     static background_color() {
         return graphics.treat(new Color(245, 245, 245, 255)).getHex();

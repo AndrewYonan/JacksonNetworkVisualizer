@@ -1,6 +1,5 @@
 class StatLog {
     constructor() {
-
         this.x = 100;
         this.y = 100;
         this.font_size = 25;
@@ -64,15 +63,18 @@ class StatLog {
         if (milliseconds < 10) str += (":0" + milliseconds.toString())
         else str += (":" + milliseconds.toString());
 
-        ctx.fillText(str, this.x + 5 * this.space, this.y);
+        ctx.fillText(str, this.x + 5.5 * this.space, this.y);
         ctx.fillStyle = cur_style;
 
+    }
+    display_restart_message() {
+        graphics.fill_text("Press \"R\" to restart", 50, H - 50, "Times New Roman", 25);
     }
     display() {
         this.display_seekers_created();
         this.display_seekers_processed();
-        this.display_seekers_alive();
         this.display_clock();
+        this.display_restart_message();
 
     }
 }

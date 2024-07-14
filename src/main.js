@@ -12,14 +12,13 @@ var simulation_finished = false;
 var seekers = []; //seeker instances
 var statLog = new StatLog(); //clock, instance counts
 var evtHandler = new EventHandler();
+var controlPanel = new ControlPanel();
 
 const MAX_SEEKERS = 100;
-const SEEKER_SPEED = 5.7; 
-const SEEKER_SIZE = 22; 
+const SEEKER_SIZE = 20; 
+const add_seeker_interval = 10; //frame period after which to add new seeker
 const SEEKER_REACTION_TIME = 25; //reaction to next in queue moving up
-const SERVER_SIZE = SEEKER_SIZE;
-const LINE_SPACE_BETWEEN = 7;
-const add_seeker_interval = 10;
+const LINE_SPACE_BETWEEN = 8; //space between memebers of the queue
 
 evtHandler.active();
 
@@ -28,8 +27,7 @@ evtHandler.active();
 single-queue, double-queue, fork, 3-fork, fan, 2-fan, spiral, steps, waterfall, star
  */
 
-var jacksonNetwork = new JacksonNetwork("star");
-
+var jacksonNetwork = new JacksonNetwork("fork");
 
 function frame() {
     if (!simulation_finished) {
@@ -38,12 +36,43 @@ function frame() {
     display_simulation_state();
 }
 
+function restart() {
+    remove_seekers();
+    jacksonNetwork.reset_nodes();
+    controlPanel.reset_properties();
+    frame_count = 0;
+    seekers_created = 0;
+    seekers_processed = 0;
+    simulation_finished = false;
+}
+
+function remove_seekers() {
+    seekers.splice(0, seekers.length);
+}
 
 function update_simulation_state() {
+    update_control_panel_properties();
     add_seekers_periodic();
     update_seekers();
     frame_count++;
-    if (seekers.length == 0) simulation_finished = true;
+    if (seekers_created == seekers_processed) simulation_finished = true;
+}
+
+
+function update_control_panel_properties() {
+    update_seeker_properties();
+
+}
+
+function update_seeker_properties() {
+
+    let speed = controlPanel.get_seeker_speed();
+    let reaction_margin = controlPanel.get_reaction_margin();
+    
+    for (let seeker of seekers) {
+        seeker.set_speed(speed);
+        seeker.set_reaction_margin(reaction_margin);
+    }
 }
 
 function create_and_add_seeker_to(jacksonNetwork) {
@@ -74,7 +103,9 @@ function display_simulation_state() {
     graphics.clear(c, ctx);
     display_seekers();
     jacksonNetwork.display_nodes();
+    jacksonNetwork.update_nodes();
     statLog.display();
+    controlPanel.display();
 }
 
 

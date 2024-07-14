@@ -39,10 +39,22 @@ class JacksonNetwork {
         }
     }
 
+    reset_nodes() {
+        for (let node of this.nodes) {
+            node.reset();
+        }
+    }
+
 
     display_nodes() {
         for (let node of this.nodes) {
             node.get_server().display();
+        }
+    }
+
+    update_nodes() {
+        for (let node of this.nodes) {
+            node.get_server().update();
         }
     }
 
