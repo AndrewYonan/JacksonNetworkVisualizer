@@ -25,6 +25,8 @@ class EventHandler {
             control_panel.highlight_hovered_buttons(pos.x, pos.y);
 
             if (slider == null) return;
+
+            control_panel.set_most_recent_change_time(simulation.get_frame_count())
             slider.track_to(pos.x);
         }
 

@@ -12,7 +12,7 @@ class Simulation {
 
         this.control_panel = new ControlPanel();
         this.stat_log = new StatLog(this);
-        this.control_panel_update_interval = 10;
+        this.control_panel_update_interval = 5;
         
     }
 
@@ -76,8 +76,10 @@ class Simulation {
     }
 
     update_control_panel_properties() {
-        if (this.frame_count % this.control_panel_update_interval == 0) {
-            this.update_seeker_properties_from_control_panel();
+        if (this.control_panel.sliders_have_been_changed_recently(this.frame_count)) {
+            if (this.frame_count % this.control_panel_update_interval == 0) {
+                this.update_seeker_properties_from_control_panel();
+            }
         }
     }
 
