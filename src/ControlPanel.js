@@ -10,7 +10,6 @@ class ControlPanel {
                             "Fan", 
                             "2-Fan",
                             "Star",
-                            "Steps",
                             "Spiral",
                             "Waterfall"];
 

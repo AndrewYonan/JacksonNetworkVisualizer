@@ -28,7 +28,6 @@ class Simulation {
     restart() {
         this.clear_seekers();
         this.jackson_network.reset_nodes();
-        this.control_panel.reset_properties();
         this.frame_count = 0;
         this.seekers_created = 0;
         this.seekers_processed = 0;
@@ -120,6 +119,7 @@ class Simulation {
 
     create_and_add_seeker_to_network() {
         let seeker = new Seeker(-150, H/2);
+        seeker.set_speed(this.control_panel.get_seeker_speed());
         seeker.enter(this.jackson_network);
         this.seekers.push(seeker); 
         this.seekers_created++;
