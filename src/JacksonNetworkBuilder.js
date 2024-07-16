@@ -5,22 +5,25 @@ class JacksonNetworkBuilder {
     }
 
     configure(preset) {
-        if (preset == "single-queue") {
+        if (preset == "1-Queue") {
             this.configure_single_queue();
         }
-        else if (preset == "double-queue") {
+        else if (preset == "2-Queue") {
             this.configure_double_queue();
         }
-        else if (preset == "fork") {
+        else if (preset == "3-Queue") {
+            this.configure_single_queue();
+        }
+        else if (preset == "Fork") {
             this.configure_fork();
         }
         else if (preset == "3-fork") {
             this.configure_3_fork();
         }
-        else if (preset == "fan") {
+        else if (preset == "Fan") {
             this.configure_fan();
         }
-        else if (preset == "2-fan") {
+        else if (preset == "2-Fan") {
             this.configure_2_fan();
         }
         else if (preset == "fast-track") {
@@ -29,16 +32,16 @@ class JacksonNetworkBuilder {
         else if (preset == "end") {
             this.configure_end();
         }
-        else if (preset == "spiral") {
+        else if (preset == "Spiral") {
             this.configure_spiral();
         }
-        else if (preset == "steps") {
+        else if (preset == "Steps") {
             this.configure_steps();
         }
-        else if (preset == "waterfall") {
+        else if (preset == "Waterfall") {
             this.configure_waterfall();
         }
-        else if (preset == "star") {
+        else if (preset == "Star") {
             this.configure_star();
         }
         else {

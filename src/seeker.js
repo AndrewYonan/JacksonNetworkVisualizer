@@ -5,13 +5,13 @@ class Seeker {
         this.x = x_0;
         this.y = y_0;
         this.size = SEEKER_SIZE;
-        this.speed = 5;
+        this.speed = 3;
 
         this.target_node = null;
         this.service_completed = false;
         this.in_line_for_service = false; //moving through waiting queue
         this.ready_for_service = false; //ready to move into serving box
-        this.being_serverd = false; //begin served at service box
+        this.being_served = false;
         this.place_in_line = 0; //current spot in line
         this.moving_up_in_line = false; //moving to next spot in line
         this.is_last_in_line = false; 
@@ -24,6 +24,11 @@ class Seeker {
         this.active = true;
         this.visible = true;
 
+    }
+
+    reset() {
+        this.target_node = null;
+        this.reset_service_params();
     }
 
     set_speed(s) {
@@ -53,6 +58,10 @@ class Seeker {
         this.active = false;
     }
 
+    is_exiting_network() {
+        return this.exiting_system;
+    }
+
     set_next_target_node() {
         if (this.target_node.get_tag() == "exit" || this.target_node.get_tag() == "entry-exit") {
             this.exiting_system = true;
@@ -71,7 +80,7 @@ class Seeker {
         this.service_completed = false;
         this.in_line_for_service = false;
         this.ready_for_service = false;
-        this.being_serverd = false;
+        this.being_served = false;
         this.place_in_line = 0;
         this.moving_up_in_line = false;
         this.is_last_in_line = false;
@@ -308,11 +317,11 @@ class Seeker {
             graphics.trace_square(this.x, this.y, this.size, graphics.seeker_highlight_color());
         }
         else if (this.exiting_system) {
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 2;
             graphics.trace_square(this.x, this.y, this.size, graphics.seeker_finished_color());
         }
         else {
-            ctx.lineWidth = 3;    
+            ctx.lineWidth = 2;    
             graphics.trace_square(this.x, this.y, this.size, graphics.seeker_color());
         }
         

@@ -47,8 +47,26 @@ class graphics {
         ctx.fillRect(0, 0, c.width, c.height);
         ctx.fillStyle = cur;
     } 
+    static draw_button(text, x, y, w, h, highlight) {
+        let cur_width = ctx.lineWidth;
+        if (highlight) {
+            ctx.lineWidth = 4;
+            graphics.trace_rect(x,y,w,h,graphics.button_outline_color());
+        } 
+        graphics.fill_rect(x,y,w,h, graphics.button_color());
+        ctx.textAlign = "center";
+        ctx.fillStyle = graphics.text_reg_color();
+        graphics.fill_text(text, x, y, "Arial", 18);
+        ctx.lineWidth = cur_width;
+    }
     static invert() {
         this.color_invert = !this.color_invert;
+    }
+    static button_outline_color() {
+        return graphics.treat(new Color(10,10,10,255)).getHex();
+    }
+    static button_color() {
+        return graphics.treat(new Color(225,225,225,255)).getHex();
     }
     static seeker_color() {
         return graphics.treat(new Color(30,170,30,255)).getHex()

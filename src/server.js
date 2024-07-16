@@ -23,6 +23,10 @@ class Server {
 
     }
 
+    remove_seekers() {
+        this.queue.splice(0, this.queue.length);
+    }
+
     create_end_of_line() {
 
         if (this.line_orientation == 1) {
@@ -181,9 +185,5 @@ class Server {
 
         }
         graphics.trace_square(this.x, this.y, this.size, graphics.server_color());
-    }
-
-    update() {
-        //
     }
 }

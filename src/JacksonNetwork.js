@@ -11,11 +11,7 @@ class JacksonNetwork {
         this.nodes = this.builder.build();
 
         this.assert_law_of_probability();
-    }
-
-    get_nodes() {
-        return this.nodes;
-    }
+    }   
 
     assert_law_of_probability() {
         for (let node of this.nodes) {
@@ -39,6 +35,12 @@ class JacksonNetwork {
         }
     }
 
+    remove_seekers() {
+        for (let node of this.nodes) {
+            node.remove_seekers();
+        }
+    }
+
     reset_nodes() {
         for (let node of this.nodes) {
             node.reset();
@@ -49,12 +51,6 @@ class JacksonNetwork {
     display_nodes() {
         for (let node of this.nodes) {
             node.get_server().display();
-        }
-    }
-
-    update_nodes() {
-        for (let node of this.nodes) {
-            node.get_server().update();
         }
     }
 
