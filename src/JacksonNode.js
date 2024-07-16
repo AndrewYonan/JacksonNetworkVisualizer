@@ -38,7 +38,7 @@ class JacksonNode {
         this.transition_probabilities.push(probability);
     }
 
-    get_probabilistic_adjacent_node() {
+    get_probabilistic_adjacent_node() { //get random adjacent node based on transition probabilities
         let r = Math.random();
         let end = this.transition_probabilities[0];
         let idx = 0;

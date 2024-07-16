@@ -1,7 +1,7 @@
 class StatLog {
     constructor(simulation) {
 
-        this.x = 100;
+        this.x = 150;
         this.y = 100;
         this.space = 200;
         this.font_size = 25;
@@ -18,7 +18,7 @@ class StatLog {
         let cur = ctx.fillStyle;
         ctx.fillStyle = graphics.text_reg_color();
         ctx.font = this.font_size.toString() + "px " + this.font;
-        ctx.fillText("Created : " + this.simulation.get_seekers_created().toString(), this.x, this.y);
+        ctx.fillText("Instances : " + this.simulation.get_seekers_created().toString(), this.x, this.y);
         ctx.fillStyle = cur;
     }
 

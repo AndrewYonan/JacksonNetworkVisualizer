@@ -12,25 +12,22 @@ class JacksonNetworkBuilder {
             this.configure_double_queue();
         }
         else if (preset == "3-Queue") {
-            this.configure_single_queue();
+            this.configure_triple_queue();
         }
         else if (preset == "Fork") {
             this.configure_fork();
         }
-        else if (preset == "3-fork") {
+        else if (preset == "3-Fork") {
             this.configure_3_fork();
+        }
+        else if (preset == "Cycle") {
+            this.configure_cycle();
         }
         else if (preset == "Fan") {
             this.configure_fan();
         }
         else if (preset == "2-Fan") {
             this.configure_2_fan();
-        }
-        else if (preset == "fast-track") {
-            this.configure_fast_track();
-        }
-        else if (preset == "end") {
-            this.configure_end();
         }
         else if (preset == "Spiral") {
             this.configure_spiral();
@@ -49,16 +46,11 @@ class JacksonNetworkBuilder {
         }
     }
 
-    configure_end() {
-        var node1 = new JacksonNode(W - 100, H/2, 0, "entry-exit", 1);
-        this.nodes.push(node1);
-    }
-
     configure_fork() {
 
-        var node1 = new JacksonNode(W/3, H/2, 20, "entry", 1);
-        var node2 = new JacksonNode(2*W/3, H/2 - 100, 70, "exit", 1);
-        var node3 = new JacksonNode(2*W/3, H/2 + 100, 70, "exit", 1);
+        let node1 = new JacksonNode(W/3, H/2, 20, "entry", 1);
+        let node2 = new JacksonNode(2*W/3, H/2 - 100, 70, "exit", 1);
+        let node3 = new JacksonNode(2*W/3, H/2 + 100, 70, "exit", 1);
 
         node1.add_adjacent_node(node2, 0.5);
         node1.add_adjacent_node(node3, 0.5);
@@ -71,13 +63,10 @@ class JacksonNetworkBuilder {
 
     configure_3_fork() {
 
-        let rate1 = 5;
-        let rate2 = 20;
-
-        var node1 = new JacksonNode(W/3, H/2, rate1, "entry", 1);
-        var node2 = new JacksonNode(2*W/3, 1*H/4, 20, "reg", 1);
-        var node3 = new JacksonNode(2*W/3, 2*H/4, 30, "exit", 1);
-        var node4 = new JacksonNode(2*W/3, 3*H/4, 40, "reg", 1);
+        let node1 = new JacksonNode(W/3, H/2, 5, "entry", 1);
+        let node2 = new JacksonNode(2*W/3, 1*H/4, 30, "reg", 1);
+        let node3 = new JacksonNode(2*W/3, 2*H/4, 30, "exit", 1);
+        let node4 = new JacksonNode(2*W/3, 3*H/4, 30, "reg", 1);
 
         node1.add_adjacent_node(node2, 0.4);
         node1.add_adjacent_node(node3, 0.2);
@@ -93,21 +82,16 @@ class JacksonNetworkBuilder {
 
     configure_single_queue() {
 
-        var node1 = new JacksonNode(W/2, H/2, 50, "entry-exit", 1);
+        let node1 = new JacksonNode(W/2, H/2, 50, "entry-exit", 1);
         this.nodes.push(node1);
 
     }
 
-    configure_fast_track() {
-        var node = new JacksonNode(W/2, H/2, 1, "entry-exit", 1);
-        this.nodes.push(node);
-
-    }
 
     configure_double_queue() {
 
-        var node1 = new JacksonNode(W/3, H/2, 10, "entry", 1);
-        var node2 = new JacksonNode(2*W/3, H/2, 11, "exit", 1);
+        let node1 = new JacksonNode(W/3, H/2, 10, "entry", 1);
+        let node2 = new JacksonNode(2*W/3, H/2, 11, "exit", 1);
 
         node1.add_adjacent_node(node2, 1);
 
@@ -115,12 +99,58 @@ class JacksonNetworkBuilder {
         this.nodes.push(node2);
     }
 
+    configure_triple_queue() {
+
+        let node1 = new JacksonNode(W/4, H/2, 15, "entry", 1);
+        let node2 = new JacksonNode(2*W/4, H/2 - 100, 17, "reg", 1);
+        let node3 = new JacksonNode(3*W/4, H/2 - 200, 19, "exit", 1);
+
+        node1.add_adjacent_node(node2, 1);
+        node2.add_adjacent_node(node3, 1);
+
+        this.nodes.push(node1);
+        this.nodes.push(node2);
+        this.nodes.push(node3);
+    }
+
+    configure_cycle() {
+
+        let entry = new JacksonNode(W/4, H/2, 5, "entry", 1);
+        let lower1 = new JacksonNode(2*W/4, H/2 + 200, 5, "reg", 4);
+        let lower2 = new JacksonNode(3*W/4, H/2 + 75, 9, "reg", 1);
+        let upper1 = new JacksonNode(W/4 + 200, H/2 - 150, 5, "reg", 2);
+        let upper2 = new JacksonNode(3*W/4 - 150, H/2 - 50, 7, "reg", 1);
+        let top = new JacksonNode(W/2 + 400, 200, 7, "reg", 3);
+
+        entry.add_adjacent_node(lower1, 1);
+        lower1.add_adjacent_node(lower2, 0.5);
+        lower1.add_adjacent_node(entry, 0.5);
+
+        lower2.add_adjacent_node(top, 1);
+        top.add_adjacent_node(upper1, 1);
+
+        upper1.add_adjacent_node(upper2, 0.9);
+        upper1.add_adjacent_node(entry, 0.1);
+        upper2.add_adjacent_node(upper1, 0.25);
+        upper2.add_adjacent_node(lower1, 0.25);
+        upper2.add_adjacent_node(top, 0.25);
+        upper2.add_adjacent_node(lower2, 0.25);
+
+        this.nodes.push(entry);
+        this.nodes.push(lower1);
+        this.nodes.push(lower2);
+        this.nodes.push(upper1);
+        this.nodes.push(upper2);
+        this.nodes.push(top);
+
+    }
+
     configure_fan() {
 
         let num_servers = 6;
         let a = 5;
-        let fast_rate = 10;
-        let slow_rate = 90;
+        let fast_rate = 5;
+        let slow_rate = 140;
 
         let node = new JacksonNode(W - 300, H/2, fast_rate, "exit", 1);
         this.nodes.push(node);

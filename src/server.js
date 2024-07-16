@@ -7,7 +7,7 @@ class Server {
         this.is_occupied = false;
         this.service_counter = 0;
         this.end_of_line_spot = 0;
-        this.line_orientation = this.create_line_orientation(orientation); //1 - left, 2 - top, 3 - right, 4 - bottom
+        this.line_orientation = this.create_line_orientation(orientation); //1 - left, 2 - top, 3 - right, 4 - bottom (direction queueing instances line up for service)
 
         this.queue = [];
         this.space_between_line_spots = LINE_SPACE_BETWEEN;

@@ -35,6 +35,7 @@ class Simulation {
     }
 
     step() {
+        if (this.is_finished()) return;
         this.add_seekers_periodic();
         this.update_seekers(); 
         this.update_control_panel_properties(); 

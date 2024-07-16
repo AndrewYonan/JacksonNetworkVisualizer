@@ -7,6 +7,8 @@ class ControlPanel {
                             "2-Queue", 
                             "3-Queue", 
                             "Fork",
+                            "3-Fork",
+                            "Cycle",
                             "Fan", 
                             "2-Fan",
                             "Star",
@@ -60,7 +62,7 @@ class ControlPanel {
         let x = this.start_x;
         let y = this.start_y;
 
-        this.seeker_speed_slider = new Slider(x, y, "Seeker Speed", 1, 8, 3);
+        this.seeker_speed_slider = new Slider(x, y, "Seeker Speed", 1, 15, 3);
         this.sliders.push(this.seeker_speed_slider);
     }
 

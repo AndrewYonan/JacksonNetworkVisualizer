@@ -66,7 +66,7 @@ class graphics {
         return graphics.treat(new Color(10,10,10,255)).getHex();
     }
     static button_color() {
-        return graphics.treat(new Color(225,225,225,255)).getHex();
+        return graphics.treat(new Color(240,240,240,255)).getHex();
     }
     static seeker_color() {
         return graphics.treat(new Color(30,170,30,255)).getHex()
@@ -102,7 +102,7 @@ class graphics {
         return graphics.treat(new Color(75, 150, 40, 255)).getHex();
     }
     static background_color() {
-        return graphics.treat(new Color(245, 245, 245, 255)).getHex();
+        return graphics.treat(new Color(230, 230, 230, 255)).getHex();
     }
     static treat(color) {
         if (graphics.color_invert) {
