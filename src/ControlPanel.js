@@ -147,10 +147,16 @@ class ControlPanel {
 
     display() {
         for (let slider of this.sliders) {
+            let cur_transform = ctx.getTransform();
+            ctx.resetTransform();
             slider.draw();
+            ctx.setTransform(cur_transform);
         }
         for (let button of this.buttons) {
+            let cur_transform = ctx.getTransform();
+            ctx.resetTransform();
             button.draw();
+            ctx.setTransform(cur_transform);
         }
 
     }

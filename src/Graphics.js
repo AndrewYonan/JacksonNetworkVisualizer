@@ -41,11 +41,17 @@ class graphics {
         ctx.fillStyle = cur;
     }
     static clear(c,ctx) {
+
+        let cur_transform = ctx.getTransform();
+        ctx.resetTransform();
+
         let cur = ctx.fillStyle;
         ctx.clearRect(0, 0, c.width, c.height);
         ctx.fillStyle = graphics.background_color();
         ctx.fillRect(0, 0, c.width, c.height);
         ctx.fillStyle = cur;
+
+        ctx.setTransform(cur_transform);
     } 
     static draw_button(text, x, y, w, h, highlight) {
         let cur_width = ctx.lineWidth;

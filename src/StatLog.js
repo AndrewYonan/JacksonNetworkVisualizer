@@ -71,9 +71,12 @@ class StatLog {
 
     }
     display() {
+        let cur_transform = ctx.getTransform();
+        ctx.resetTransform();
         this.display_seekers_created();
         this.display_seekers_processed();
         this.display_clock();
         this.display_restart_message();
+        ctx.setTransform(cur_transform);
     }
 }

@@ -313,7 +313,7 @@ class Seeker {
         let cur_width = ctx.lineWidth;
 
         if (this.being_served) {   
-            ctx.lineWidth = 5; 
+            ctx.lineWidth = 6; 
             graphics.trace_square(this.x, this.y, this.size, graphics.seeker_highlight_color());
         }
         else if (this.exiting_system) {
@@ -321,7 +321,7 @@ class Seeker {
             graphics.trace_square(this.x, this.y, this.size, graphics.seeker_finished_color());
         }
         else {
-            ctx.lineWidth = 2;    
+            ctx.lineWidth = 3;    
             graphics.trace_square(this.x, this.y, this.size, graphics.seeker_color());
         }
         

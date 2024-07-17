@@ -1,4 +1,10 @@
 class EventHandler {
+
+    constructor() {
+        this.mouse_down_pos = null;
+        this.mouse_down = false;
+        this.mouse_pos = null;
+    }
     
     active() {
 
@@ -18,16 +24,25 @@ class EventHandler {
         c.onmousemove = function(evt) {
 
             let pos = get_mouse_pos(c, evt);
+            this.mouse_pos = pos;
             let control_panel = simulation.get_control_panel();
             let slider = control_panel.get_bound_slider();
 
             control_panel.highlight_hovered_sliders(pos.x, pos.y);
             control_panel.highlight_hovered_buttons(pos.x, pos.y);
 
-            if (slider == null) return;
+            if (slider != null) {
+                control_panel.set_most_recent_change_time(simulation.get_frame_count())
+                slider.track_to(pos.x);
+            }
 
-            control_panel.set_most_recent_change_time(simulation.get_frame_count())
-            slider.track_to(pos.x);
+            if (this.mouse_down) {
+                let dx = (pos.x - this.mouse_down_pos.x) / ZOOM_SCALE;
+                let dy = (pos.y - this.mouse_down_pos.y) / ZOOM_SCALE;
+                ctx.transform(1,0,0,1,dx,dy);
+                this.mouse_down_pos.x = pos.x;
+                this.mouse_down_pos.y = pos.y;
+            }
         }
 
         c.onmousedown = function(evt) {
@@ -38,16 +53,35 @@ class EventHandler {
             let slider = control_panel.get_clicked_slider(pos.x, pos.y);
             let button = control_panel.get_clicked_button(pos.x, pos.y);
 
-            if (slider != null) slider.bind_to_mouse();
-            if (button != null) {
+            if (slider != null) {
+                slider.bind_to_mouse();
+            } 
+            else if (button != null) {
                 let new_simulation_preset = button.get_name();
                 simulation.change_jackson_network_structure(new_simulation_preset);
+            }
+            else {
+                if (!this.mouse_down) {
+                    this.mouse_down_pos = {x : pos.x, y : pos.y};
+                    this.mouse_down = true;
+                }
             }
         }
 
         c.onmouseup = function(evt) {
+
+            this.mouse_down = false;
             let control_panel = simulation.get_control_panel();
             control_panel.release_all()
+        }
+
+        c.onwheel = function(evt) {
+
+            let ds = -(evt.deltaY * 0.0001)
+            ZOOM_SCALE *= (1 + ds);
+            ctx.transform(1,0,0,1,this.mouse_pos.x, this.mouse_pos.y);
+            ctx.transform(1 + ds,0,0,1 + ds,0,0);
+            ctx.transform(1,0,0,1,-this.mouse_pos.x, -this.mouse_pos.y);
         }
     }
 }

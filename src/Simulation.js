@@ -13,7 +13,6 @@ class Simulation {
         this.control_panel = new ControlPanel();
         this.stat_log = new StatLog(this);
         this.control_panel_update_interval = 5;
-        
     }
 
     init(preset) {
