@@ -5,7 +5,7 @@ class Simulation {
         this.seekers = [];
         this.seekers_created = 0;
         this.seekers_processed = 0
-        this.add_seeker_interval = 2;
+        this.add_seeker_interval = 10;
         this.simulation_finished = false;
         this.frame_count = 0;
         this.max_seekers = 100;
@@ -13,24 +13,30 @@ class Simulation {
         this.control_panel = new ControlPanel();
         this.stat_log = new StatLog(this);
         this.control_panel_update_interval = 5;
+        this.preset = null;
+    }
+
+    get_jackson_network_UI() {
+        if (this.jackson_network != null) {
+            return this.jackson_network.get_UI();
+        } 
+        return null;
     }
 
     init(preset) {
+        this.preset = preset;
         this.seekers_created = 0;
         this.seekers_processed = 0
         this.add_seeker_interval = 10;
         this.simulation_finished = false;
         this.frame_count = 0;
         this.jackson_network = new JacksonNetwork(preset);
+        this.jackson_network.attach_UI_interface();
     }
 
     restart() {
         this.clear_seekers();
-        this.jackson_network.reset_nodes();
-        this.frame_count = 0;
-        this.seekers_created = 0;
-        this.seekers_processed = 0;
-        this.simulation_finished = false;
+        this.init(this.preset);
     }
 
     step() {
@@ -129,8 +135,10 @@ class Simulation {
         return this.control_panel;
     }
 
-    change_jackson_network_structure(preset) {
+    change_jackson_network(preset) {
+        this.preset = preset;
         this.jackson_network = new JacksonNetwork(preset);
+        this.jackson_network.attach_UI_interface();
         for (let seeker of this.seekers) {
             if (!seeker.is_exiting_network())
             seeker.reset();

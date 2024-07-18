@@ -105,10 +105,13 @@ class graphics {
         return graphics.treat(new Color(40, 40, 40, 255)).getHex();
     }
     static slider_highlight_color() {
-        return graphics.treat(new Color(75, 150, 40, 255)).getHex();
+        return graphics.treat(new Color(10, 10, 10, 255)).getHex();
     }
     static background_color() {
         return graphics.treat(new Color(230, 230, 230, 255)).getHex();
+    }
+    static info_box_fill_color() {
+        return graphics.treat(new Color(240, 240, 240, 220)).getHex();
     }
     static treat(color) {
         if (graphics.color_invert) {

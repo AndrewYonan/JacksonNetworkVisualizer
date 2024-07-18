@@ -9,9 +9,21 @@ class JacksonNetwork {
         this.builder = new JacksonNetworkBuilder(this.nodes);
         this.builder.configure(preset);
         this.nodes = this.builder.build();
-
         this.assert_law_of_probability();
+        this.jackson_network_UI_interface = null;
     }   
+
+    attach_UI_interface() {
+        this.jackson_network_UI_interface = new JacksonNetworkUI(this);
+    }   
+
+    get_UI() {
+        return this.jackson_network_UI_interface;
+    }
+
+    get_nodes() {
+        return this.nodes;
+    }
 
     assert_law_of_probability() {
         for (let node of this.nodes) {
@@ -49,8 +61,17 @@ class JacksonNetwork {
 
 
     display_nodes() {
+        let info_box_node = null;
         for (let node of this.nodes) {
-            node.get_server().display();
+            if (node.info_box_open) {
+                info_box_node = node;
+            }
+            else {
+                node.display();
+            }
+        }
+        if (info_box_node) {
+            info_box_node.display();
         }
     }
 

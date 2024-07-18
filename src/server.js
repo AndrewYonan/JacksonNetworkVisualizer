@@ -12,6 +12,15 @@ class Server {
         this.queue = [];
         this.space_between_line_spots = LINE_SPACE_BETWEEN;
         this.end_of_line = this.create_end_of_line();
+        this.highlight = false;
+    }
+
+    set_highlight(bool) {
+        this.highlight = bool;
+    }
+
+    get_size() {
+        return this.size;
     }
 
     reset_params() {
@@ -183,6 +192,12 @@ class Server {
 
             this.show_service_time();
 
+        }
+        if (this.highlight) {
+            let cur_line_width = ctx.lineWidth;
+            ctx.lineWidth = 5;
+            graphics.trace_square(this.x, this.y, this.size + 5, graphics.seeker_color());
+            ctx.lineWidth = cur_line_width;
         }
         graphics.trace_square(this.x, this.y, this.size, graphics.server_color());
     }

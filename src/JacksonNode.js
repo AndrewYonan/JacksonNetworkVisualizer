@@ -1,10 +1,38 @@
 class JacksonNode {
 
     constructor(x,y,rate,tag,orientation) {
+        this.x = x;
+        this.y = y;
         this.set_tag(tag);
         this.server = new Server(x,y,rate,orientation);
         this.adjacent_nodes = [];
         this.transition_probabilities = [];
+        this.jacksonNodeInfoBox = null;
+        this.info_box_open = false;
+    }
+
+    open_info_box() {
+        this.info_box_open = true;
+        this.jacksonNodeInfoBox = new JacksonNodeInfoBox(this.x ,this.y);
+    }
+
+    close_info_box() {
+        this.info_box_open = false;
+        this.jacksonNodeInfoBox = null;
+    }
+
+    is_overlapping(x,y) {
+        let size = this.server.get_size();
+        if (x > this.x - size/2 && x < this.x + size/2) {
+            if (y > this.y - size/2 && y < this.y + size/2) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    set_highlight(bool) {
+        this.server.set_highlight(bool);
     }
 
     remove_seekers() {
@@ -65,5 +93,16 @@ class JacksonNode {
     set_tag(tag) {
         if (tag != "entry" && tag != "reg" && tag != "exit" && tag != "entry-exit") this.tag = "reg";
         else this.tag = tag;
+    }
+
+    display_info_box() {
+        graphics.trace_rect(this.x, this.y, 20, 20, graphics.text_reg_color());
+    }
+
+    display() {
+        this.server.display();
+        if (this.jacksonNodeInfoBox != null) {
+            this.jacksonNodeInfoBox.display();
+        }
     }
 }

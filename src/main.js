@@ -9,11 +9,13 @@ const SERVER_SIZE = SEEKER_SIZE; //size of queue service nodes
 const LINE_SPACE_BETWEEN = 8; //space between queue entries (seekers)
 const iterator = setInterval(frame, 1000 / frame_rate);
 const evtHandler = new EventHandler();
-var ZOOM_SCALE = 1;
 var simulation = new Simulation();
 
+var ZOOM_SCALE = 1; //unused, couldn't implement correctly
+var X_ORIGIN = 0;
+var Y_ORIGIN = 0;
 
-evtHandler.active();
+evtHandler.set_active();
 simulation.init("1-Queue");
 
 

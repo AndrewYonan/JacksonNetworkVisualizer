@@ -158,6 +158,5 @@ class ControlPanel {
             button.draw();
             ctx.setTransform(cur_transform);
         }
-
     }
 }
