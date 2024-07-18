@@ -1,5 +1,9 @@
 class EventHandler {
 
+    //note (TO FIX): event handler shouldn't give two shits
+    //about what kind of interface it's relaying data to
+    //horrendous coupling follows:
+
     constructor() {
         this.mouse_down_pos = null;
         this.mouse_down = false;
@@ -34,14 +38,15 @@ class EventHandler {
             jackson_network_UI.highlight_hovered_nodes(pos.x - X_ORIGIN, pos.y - Y_ORIGIN);
 
             if (slider != null) {
-                control_panel.set_most_recent_change_time(simulation.get_frame_count())
                 slider.track_to(pos.x);
+                SEEKER_SPEED = control_panel.get_seeker_speed();
+                SEEKER_REACTION_MARGIN = control_panel.get_reaction_margin();
             }
 
             if (this.mouse_down) {
 
-                let dx = (pos.x - this.mouse_down_pos.x) / ZOOM_SCALE;
-                let dy = (pos.y - this.mouse_down_pos.y) / ZOOM_SCALE;
+                let dx = (pos.x - this.mouse_down_pos.x);
+                let dy = (pos.y - this.mouse_down_pos.y);
 
                 X_ORIGIN += dx;
                 Y_ORIGIN += dy;
@@ -59,7 +64,7 @@ class EventHandler {
             let slider = control_panel.get_clicked_slider(pos.x, pos.y);
             let button = control_panel.get_clicked_button(pos.x, pos.y);
             let jackson_network_UI = simulation.get_jackson_network_UI();
-            
+
             jackson_network_UI.open_clicked_node_info_boxes(pos.x - X_ORIGIN, pos.y - Y_ORIGIN);
 
             if (slider != null) {
@@ -83,14 +88,5 @@ class EventHandler {
             let control_panel = simulation.get_control_panel();
             control_panel.release_all()
         }
-
-        // c.onwheel = function(evt) {
-
-        //     let ds = -(evt.deltaY * 0.0001)
-        //     ZOOM_SCALE *= (1 + ds);
-        //     ctx.transform(1,0,0,1,this.mouse_pos.x, this.mouse_pos.y);
-        //     ctx.transform(1 + ds,0,0,1 + ds,0,0);
-        //     ctx.transform(1,0,0,1,-this.mouse_pos.x, -this.mouse_pos.y);
-        // }
     }
 }

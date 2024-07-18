@@ -5,7 +5,6 @@ class Seeker {
         this.x = x_0;
         this.y = y_0;
         this.size = SEEKER_SIZE;
-        this.speed = 3;
 
         this.target_node = null;
         this.service_completed = false;
@@ -16,7 +15,6 @@ class Seeker {
         this.moving_up_in_line = false; //moving to next spot in line
         this.is_last_in_line = false; 
         this.exiting_system = false;
-        this.successor_move_reaction_margin = 10;
         
         this.next_spot_in_line = null;
         this.successor = null;
@@ -32,11 +30,11 @@ class Seeker {
     }
 
     set_speed(s) {
-        this.speed = s;
+        SEEKER_SPEED = s;
     }
 
     set_reaction_margin(r) {
-        this.successor_move_reaction_margin = r;
+        SEEKER_REACTION_MARGIN = r;
     }
 
     set_target_node(node) {
@@ -89,12 +87,8 @@ class Seeker {
     }
 
     is_in_range_of(vec2) {
-        let margin = this.speed;
+        let margin = SEEKER_SPEED
         return (Math.abs(this.x - vec2.x) < margin && Math.abs(this.y - vec2.y) < margin);
-    }
-
-    dist(vec_1, vec_2) {
-        return Math.sqrt(Math.pow((vec_2.x - vec_1.x), 2) + Math.pow((vec_2.y - vec_1.y), 2));
     }
 
     move_towards(vec2) {
@@ -103,8 +97,8 @@ class Seeker {
         if (mag == 0) return; // took 2 hours to fix this bug!
         dir.x /= mag;
         dir.y /= mag;
-        this.x += (dir.x * this.speed);
-        this.y += (dir.y * this.speed);
+        this.x += (dir.x * SEEKER_SPEED);
+        this.y += (dir.y * SEEKER_SPEED);
     }
 
     snap_to(vec2) {
@@ -170,7 +164,22 @@ class Seeker {
 
     next_seeker_in_line_moved_up() {
         if (this.successor != null) {
-            return (this.dist({x : this.x, y : this.y}, {x : this.successor.x, y : this.successor.y}) > (SEEKER_SIZE + LINE_SPACE_BETWEEN + this.successor_move_reaction_margin));
+            let thresh = (SEEKER_SIZE + LINE_SPACE_BETWEEN + SEEKER_REACTION_MARGIN);
+            let target_server = this.target_node.get_server();
+            let dist;
+            if (target_server.get_line_orientation() == 1) {
+                dist = this.successor.x - this.x;
+            }
+            if (target_server.get_line_orientation() == 2) {
+                dist = this.successor.y - this.y;
+            }
+            if (target_server.get_line_orientation() == 3) {
+                dist = this.x - this.successor.x;
+            }
+            if (target_server.get_line_orientation() == 4) {
+                dist = this.y - this.successor.y;
+            }
+            return dist > thresh;
         }
         return false;
     }

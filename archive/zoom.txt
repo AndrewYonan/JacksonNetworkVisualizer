@@ -1,0 +1,20 @@
+// c.onwheel = function(evt) {
+
+        //     let ds = -(evt.deltaY * 0.0001)
+        //     ZOOM_SCALE *= (1 + ds);
+        //     ctx.transform(1,0,0,1,this.mouse_pos.x, this.mouse_pos.y);
+        //     ctx.transform(1 + ds,0,0,1 + ds,0,0);
+        //     ctx.transform(1,0,0,1,-this.mouse_pos.x, -this.mouse_pos.y);
+        // }
+if (this.mouse_down) {
+
+                let dx = (pos.x - this.mouse_down_pos.x) / ZOOM_SCALE;
+                let dy = (pos.y - this.mouse_down_pos.y) / ZOOM_SCALE;
+
+                X_ORIGIN += dx;
+                Y_ORIGIN += dy;
+
+                ctx.transform(1,0,0,1,dx,dy);
+                this.mouse_down_pos.x = pos.x;
+                this.mouse_down_pos.y = pos.y;
+            }

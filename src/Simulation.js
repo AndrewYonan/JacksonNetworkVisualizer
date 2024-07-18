@@ -1,5 +1,21 @@
 class Simulation {
 
+    //Note (TO FIX)
+    //should simulation care about what the hell User interface 
+    //is being used to access it??
+    //control panel????
+    //stat log???????
+    //omg i care so much that
+    //i need stat log and control panel
+    //else i don't work idk
+    //yes i am simulation that needs a statistics log built
+    //into it's implementation, or else don't work, yes and implementation
+    //deeply cares about its poor control panel (because no one else will)
+    //fix it goddamn it, it's fucking bullshit
+    //more coupled than a tightly-coupled harmonic oscillator
+    //less cohesion than [something that's not very cohesive]
+    //open (as fuck) for modification and closed (as fuck) for extension
+
     constructor() {
         this.jackson_network = null;
         this.seekers = [];
@@ -9,11 +25,9 @@ class Simulation {
         this.simulation_finished = false;
         this.frame_count = 0;
         this.max_seekers = 100;
-
+        this.preset = null;
         this.control_panel = new ControlPanel();
         this.stat_log = new StatLog(this);
-        this.control_panel_update_interval = 5;
-        this.preset = null;
     }
 
     get_jackson_network_UI() {
@@ -27,7 +41,6 @@ class Simulation {
         this.preset = preset;
         this.seekers_created = 0;
         this.seekers_processed = 0
-        this.add_seeker_interval = 10;
         this.simulation_finished = false;
         this.frame_count = 0;
         this.jackson_network = new JacksonNetwork(preset);
@@ -42,8 +55,7 @@ class Simulation {
     step() {
         if (this.is_finished()) return;
         this.add_seekers_periodic();
-        this.update_seekers(); 
-        this.update_control_panel_properties(); 
+        this.update_seekers();  
         this.check_completion();
         this.update_frame_count();
     }
@@ -78,23 +90,6 @@ class Simulation {
 
     is_finished() {
         return this.simulation_finished;
-    }
-
-    update_control_panel_properties() {
-        if (this.control_panel.sliders_have_been_changed_recently(this.frame_count)) {
-            if (this.frame_count % this.control_panel_update_interval == 0) {
-                this.update_seeker_properties_from_control_panel();
-            }
-        }
-    }
-
-    update_seeker_properties_from_control_panel() {
-        let speed = this.control_panel.get_seeker_speed();
-        let reaction_margin = this.control_panel.get_reaction_margin();
-        for (let seeker of this.seekers) {
-            seeker.set_speed(speed);
-            seeker.set_reaction_margin(reaction_margin);
-        }
     }
 
     update_seekers() {

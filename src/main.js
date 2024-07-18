@@ -11,13 +11,13 @@ const iterator = setInterval(frame, 1000 / frame_rate);
 const evtHandler = new EventHandler();
 var simulation = new Simulation();
 
-var ZOOM_SCALE = 1; //unused, couldn't implement correctly
 var X_ORIGIN = 0;
 var Y_ORIGIN = 0;
+var SEEKER_REACTION_MARGIN = 10;
+var SEEKER_SPEED = 4;
 
 evtHandler.set_active();
 simulation.init("1-Queue");
-
 
 function frame() {
     simulation.step();

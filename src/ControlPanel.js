@@ -19,8 +19,6 @@ class ControlPanel {
         this.button_margin = 10;
         this.start_y = 90;
         this.start_x = W/3 + 135
-        this.time_to_idle = 60;
-        this.most_recent_change_time = 0;
 
         this.seeker_speed_slider = null;
         this.seeker_reaction_slider = null;
@@ -30,13 +28,6 @@ class ControlPanel {
 
         this.create_buttons();
 
-    }
-    set_most_recent_change_time(time) {
-        this.most_recent_change_time = time;
-    }
-
-    sliders_have_been_changed_recently(time) {
-        return (time - this.most_recent_change_time) < this.time_to_idle;
     }
 
     calculate_button_len(num_buttons, space_px, margin_px) {
